@@ -1,4 +1,4 @@
-/* globals _ angular graphlib */
+/* globals _ angular */
 
 'use strict';
 
@@ -46,19 +46,11 @@
   }
 
   function locationsService($http) {
-    const g = new graphlib.Graph({multigraph:true, directed: true});
     let data;
 
     this.get = function() {
       return $http.get('response.json')
-        .then(res => {
-          data = res.data;
-          _.map(data.deals, (l, i) => {
-            if (!g.hasNode(l.arrival)) g.setNode(l.arrival);
-            if (!g.hasNode(l.departure)) g.setNode(l.departure);
-            g.setEdge(l.arrival, l.departure, i);
-          });
-        })
+        .then(res => data = res.data)
         .then(() => {
           return {
             findRoute,

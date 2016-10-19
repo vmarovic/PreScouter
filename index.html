@@ -44,7 +44,7 @@
         </div>
       </div>
       <div ng-show="routes"style="background: #eee; max-width: 400px" md-whiteframe layout-padding>
-        <div ng-repeat="route in routes" style="margin-bottom: 10px; background: white">
+        <div ng-repeat="route in routes|orderBy:'-'" style="margin-bottom: 10px; background: white">
           <div layout="row">
             <div flex="*">{{route.departure}}&gt;{{route.arrival}}</div>
             <div>{{route.cost - route.cost * (route.discount / 100)}} EUR</div>
@@ -66,7 +66,6 @@
     <!-- Angular Material Library -->
     <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 
-    <script src="graphlib.min.js"></script>
     <script src="app.js"></script>
 
   </body>
