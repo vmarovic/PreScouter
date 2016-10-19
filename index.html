@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+  </head>
+  <body ng-app="app" ng-cloak>
+    <div layout-margin ng-controller="pageCtrl">
+      <div md-whiteframe layout-padding>
+        <div>
+          <h1 class="">Trip sorter</h1>
+          <p>Select a departure city and Arrival time</p>
+          <p>Make use of the quick filters to find the <strong>best</strong> options.</p>
+
+          <div layout="row">
+            <md-input-container flex="50">
+              <md-select ng-model="q.from" placeholder="From">
+                <md-option ng-value="loc" ng-repeat="loc in locations">{{loc}}</md-option>
+              </md-select>
+            </md-input-container>
+            <md-button class="md-fab" aria-label="FAB" ng-click="onSwap()">
+              <md-icon md-svg-src="ic_swap_horiz_white_24px.svg"></md-icon>
+            </md-button>
+            <md-input-container flex="50">
+              <md-select ng-model="q.to" placeholder="To">
+                <md-option ng-value="loc" ng-repeat="loc in locations">{{loc}}</md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+
+          <div layout="row">
+            <div flex="*">
+              <md-radio-group ng-model="q.sort" layout="row">
+                <md-radio-button flex="20" ng-repeat="opt in sortList" ng-value="opt.key">{{opt.label}}</md-radio-button>
+              </md-radio-group>
+            </div>
+            <div layout="row">
+              <md-button class="md-raised" ng-if="q.from || q.to || routes" ng-click="reset()">Reset</md-button>
+              <md-button class="md-primary md-raised" ng-click="search()">Search</md-button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div ng-show="routes"style="background: #eee; max-width: 400px" md-whiteframe layout-padding>
+        <div ng-repeat="route in routes" style="margin-bottom: 10px; background: white">
+          <div layout="row">
+            <div flex="*">{{route.departure}}&gt;{{route.arrival}}</div>
+            <div>{{route.cost - route.cost * (route.discount / 100)}} EUR</div>
+          </div>
+          <div>{{route.transport}} {{route.reference}} for {{route.duration.h}}h{{route.duration.m}}</div>
+        </div>
+        <div style="background: white">Total: {{total}}Eur</div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.4/lodash.min.js"></script>
+
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
+    <script src="graphlib.min.js"></script>
+    <script src="app.js"></script>
+
+  </body>
+</html>
